@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Platform, StatusBar, StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 import NewDeck from './components/NewDeck'
-// import { createStore } from 'redux'
-// import { Provider } from 'react-redux'
-// import reducer from './reducers'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 import Decks from './components/Decks'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { black, white, yellow } from './utils/colors'
+import { black, yellow, white } from './utils/colors'
 import { Constants } from 'expo'
 // import EntryDetail from './components/EntryDetail'
 
@@ -70,16 +71,14 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <FlashCardsStatusBar backgroundColor={black} barStyle="light-content" />
-        <MainNavigator />
-      </View>
+        <ContainerView>
+          <FlashCardsStatusBar backgroundColor={black} barStyle="light-content" />
+          <MainNavigator />
+        </ContainerView>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+const ContainerView = styled.View`
+  flex: 1;
+`
