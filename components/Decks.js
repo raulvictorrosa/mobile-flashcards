@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import styled from 'styled-components/native';
 // import { connect } from 'react-redux'
 // import { receiveEntries, addEntry } from '../actions'
 // import { timeToString, getDailyReminderValue } from '../utils/helpers'
@@ -11,77 +12,62 @@ import { black, white } from '../utils/colors'
 // import { AppLoading } from 'expo'
 
 class Decks extends Component {
-  // renderEmptyDeck() {
-  //   return (
-  //     <View style={styles.item}>
-  //       <Text style={styles.noDataText}>
-  //         You didn't log any data on this day.
-  //       </Text>
-  //     </View>
-  //   )
-  // }
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.item}>
-          <Text style={styles.titleCard}>
+        <ItemView>
+          <TextTitleCard>
             udacicards
-          </Text>
-          <Text style={styles.subTitleCard}>
+          </TextTitleCard>
+          <TextSubTitleCard>
             3 cards
-          </Text>
-        </View>
-        <View style={styles.item}>
-          <Text style={styles.titleCard}>
+          </TextSubTitleCard>
+        </ItemView>
+        <ItemView>
+          <TextTitleCard>
             new deck
-          </Text>
-          <Text style={styles.subTitleCard}>
+          </TextTitleCard>
+          <TextSubTitleCard>
             0 cards
-          </Text>
-        </View>
-        <View style={styles.item}>
-          <Text style={styles.titleCard}>
+          </TextSubTitleCard>
+        </ItemView>
+        <ItemView>
+          <TextTitleCard>
             New deck 2
-          </Text>
-          <Text style={styles.subTitleCard}>
+          </TextTitleCard>
+          <TextSubTitleCard>
             0 cards
-          </Text>
-        </View>
+          </TextSubTitleCard>
+        </ItemView>
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: white,
-    borderRadius: Platform.OS === 'ios' ? 16 : 2,
-    padding: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 17,
-    justifyContent: 'center',
-    shadowRadius: 3,
-    shadowOpacity: 0.8,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-  },
-  titleCard: {
-    color: black,
-    textAlign: 'center',
-    fontSize: 24,
-    paddingTop: 20,
-  },
-  subTitleCard: {
-    color: '#757575',
-    textAlign: 'center',
-    fontSize: 18,
-    // paddingTop: 20,
-    paddingBottom: 20
-  }
-})
+const ItemView = styled.TouchableOpacity`
+  background-color: ${white};
+  border-radius: ${Platform.OS === 'ios' ? 16 : 2};
+  padding: 20px;
+  margin-left: 10;
+  margin-right: 10;
+  margin-top: 17;
+  justify-content: center;
+  shadow-radius: 3px;
+  shadow-opacity: 0.8;
+  shadow-color: rgba(0, 0, 0, 0.24);
+  shadow-offset: 0px 3px;
+`
+const TextTitleCard = styled.Text`
+  color: ${black};
+  text-align: center;
+  font-size: 24px;
+  padding-top: 20;
+`
+const TextSubTitleCard = styled.Text`
+  color: #757575;
+  text-align: center;
+  font-size: 18px;
+  padding-top: 20;
+`
 
 export default Decks
