@@ -1,46 +1,30 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  View,
-  TouchableOpacity,
   Text,
   TextInput,
-  StyleSheet,
+  TouchableOpacity,
   KeyboardAvoidingView,
+  Keyboard,
   Platform
 } from 'react-native'
 import styled from 'styled-components/native';
-// import {
+import {
 //   getMetricMetaInfo,
-//   timeToString,
+  timeToString,
 //   getDailyReminderValue,
 //   clearLocalNotification,
 //   setLocalNotification
-// } from '../utils/helpers'
-// import UdaciSlider from './UdaciSlider'
-// import UdaciSteppers from './UdaciSteppers'
-// import DateHeader from './DateHeader'
-// import { Ionicons } from '@expo/vector-icons'
-// import TextButton from './TextButton'
-// import { submitEntry, removeEntry } from '../utils/api'
+} from '../utils/helpers'
+import { submitEntry, removeEntry } from '../api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { black, purple, white } from '../utils/colors'
 import { NavigationActions } from 'react-navigation'
 
-// function SubmitBtn({ onPress }) {
-//   return (
-//     <TouchableOpacity
-//       style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
-//       onPress={onPress}>
-//       <Text style={styles.submitBtnText}>SUBMIT</Text>
-//     </TouchableOpacity>
-//   )
-// }
-
-class NewDeck extends Component {
+class NewDeck extends React.Component {
   state = {
     title: '',
-    questions: [],
+    error: false,
   }
   // increment = (metric) => {
   //   const { max, step } = getMetricMetaInfo(metric)
@@ -69,25 +53,38 @@ class NewDeck extends Component {
   //     [metric]: value
   //   }))
   // }
-  submit = () => {
-  //   const key = timeToString()
-    const deck = this.state
+  handleSubmit = () => {
+    const { title } = this.state
+    if (title) {
+      // this.props.dispatch(addDeck({
+      //   [key]: deck
+      // }))
+      addDeck(title)
+      this.setState(() => ({ title: '' }))
 
-    // this.props.dispatch(addDeck({
-    //   [key]: deck
-    // }))
+      this.toHome()
+      // this.props.navigation.navigate(
+      //   'DeckDetail',
+      //   {
+      //     entryId: titleText,
+      //     navTitle: titleText
+      //   },
+        Keyboard.dismiss()
+      // )
 
-  //   this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }))
+      // submitEntry({ key, deck })
 
-    this.toHome()
+    //   clearLocalNotification()
+    //     .then(setLocalNotification)
 
-  //   submitEntry({ key, entry })
-
-  //   clearLocalNotification()
-  //     .then(setLocalNotification)
+    } else {
+      this.setState({ error: true })
+    }
   }
   toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({ key: 'NewDeck' }))
+    this.props.navigation.dispatch(
+      NavigationActions.back({ key: 'NewDeck' })
+    )
   }
   render() {
     return (
@@ -102,10 +99,10 @@ class NewDeck extends Component {
           value={this.state.title}
         />
         {Platform.OS === 'ios'
-          ? <IosSubmitBtn onPress={this.submit}>
+          ? <IosSubmitBtn onPress={this.handleSubmit}>
               <SubmitBtnText>Submit</SubmitBtnText>
             </IosSubmitBtn>
-          : <AndroidSubmitBtn onPress={this.submit}>
+          : <AndroidSubmitBtn onPress={this.handleSubmit}>
               <SubmitBtnText>Submit</SubmitBtnText>
             </AndroidSubmitBtn>
         }
