@@ -1,20 +1,30 @@
-import { FETCH_DECKS, ADD_ENTRY } from '../actions'
+// import { combineReducers } from 'redux';
 
-function entries (state = {}, action) {
+import { FETCH_DECKS } from '../actions'
+
+function decks (state = {}, action) {
   switch (action.type) {
     case FETCH_DECKS :
       return {
         ...state,
-        ...action.entries,
+        ...action.decks,
       }
-    case ADD_DECK :
-      return {
-        ...state,
-        ...action.deck
-      }
+
+    // case ADD_DECK :
+    //   return {
+    //     ...state,
+    //     ...action.deck
+    //   }
+
+    // case DELETE_DECK:
+    //   return action.deck;
+
     default :
       return state
   }
 }
 
-export default entries
+// export default combineReducers({
+//   decks
+// })
+export default decks
