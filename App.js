@@ -1,27 +1,26 @@
 import React from 'react';
-import { View, Platform, StatusBar, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  Platform,
+  StatusBar,
+  StyleSheet
+} from 'react-native';
 import styled from 'styled-components/native';
-import NewDeck from './components/NewDeck'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducer from './reducers'
-import Decks from './components/Decks'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { black, yellow, white } from './utils/colors'
 import { Constants } from 'expo'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import Thunk from 'redux-thunk';
+import Reducers from './reducers'
+import NewDeck from './components/NewDeck'
+import DeckList from './components/DeckList'
+import { black, yellow, white } from './utils/colors'
 // import EntryDetail from './components/EntryDetail'
 
-const FlashCardsStatusBar = ({ backgroundColor, ...props }) => {
-  return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
-  )
-}
-
 const Tabs = TabNavigator({
-  Decks: {
-    screen: Decks,
+  DeckList: {
+    screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Decks',
     },
@@ -68,17 +67,35 @@ const MainNavigator = StackNavigator({
   // }
 })
 
-export default class App extends React.Component {
-  render() {
-    return (
-        <ContainerView>
-          <FlashCardsStatusBar backgroundColor={black} barStyle="light-content" />
-          <MainNavigator />
-        </ContainerView>
-    );
-  }
-}
-
 const ContainerView = styled.View`
   flex: 1;
 `
+const StatusBarView = styled.View`
+  background-color: ${black};
+  height: ${Constants.statusBarHeight};
+`
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+// const store = createStore(Reducers);
+const store = createStore(
+  Reducers,
+  composeEnhancers(
+    applyMiddleware(Thunk)
+  )
+)
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <ContainerView>
+          <StatusBarView>
+            <StatusBar translucent backgroundColor={black} barStyle="light-content" />
+          </StatusBarView>
+
+          <MainNavigator />
+        </ContainerView>
+      </Provider>
+    );
+  }
+}
