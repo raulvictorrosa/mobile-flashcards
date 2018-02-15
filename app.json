@@ -6,15 +6,15 @@
     "description": "The best app to help you with the studies.",
     "slug": "mobile-flashcards",
     "version": "1.0.0",
-    "icon": "https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/study-512.png",
+    "icon": "https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/student-512.png",
     "notification": {
-      "icon": "https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/study-48.png"
+      "icon": "https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/student-48.png"
     },
     "ios": {
-      "bundleIdentifier": "org.mobile-flashcards.exp"
+      "bundleIdentifier": "org.mobileflashcards.exp"
     },
     "android": {
-      "package": "org.mobile-flashcards.exp"
+      "package": "org.mobileflashcards.exp"
     }
   }
 }
