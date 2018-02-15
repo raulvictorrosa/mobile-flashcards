@@ -22,10 +22,10 @@ import styled from 'styled-components/native';
 // import { Ionicons } from '@expo/vector-icons'
 // import TextButton from './TextButton'
 // import { submitEntry, removeEntry } from '../utils/api'
-// import { connect } from 'react-redux'
-// import { addEntry } from '../actions'
-import { black, purple } from '../utils/colors'
-// import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
+import { addDeck } from '../actions'
+import { black, purple, white } from '../utils/colors'
+import { NavigationActions } from 'react-navigation'
 
 // function SubmitBtn({ onPress }) {
 //   return (
@@ -71,62 +71,35 @@ class NewDeck extends Component {
   // }
   submit = () => {
   //   const key = timeToString()
-    const title = this.state
+    const deck = this.state
 
-  //   this.props.dispatch(addEntry({
-  //     [key]: entry
-  //   }))
+    // this.props.dispatch(addDeck({
+    //   [key]: deck
+    // }))
 
   //   this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }))
 
-  //   this.toHome()
+    this.toHome()
 
   //   submitEntry({ key, entry })
 
   //   clearLocalNotification()
   //     .then(setLocalNotification)
   }
-  // reset = () => {
-  //   const key = timeToString()
-
-  //   this.props.dispatch(addEntry({
-  //     [key]: getDailyReminderValue()
-  //   }))
-
-  //   this.toHome()
-
-  //   removeEntry(key)
-  // }
-  // toHome = () => {
-  //   this.props.navigation.dispatch(NavigationActions.back({ key: 'AddEntry' }))
-  // }
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({ key: 'NewDeck' }))
+  }
   render() {
-    // const metaInfo = getMetricMetaInfo()
-
-    // if (this.props.alreadyLogged) {
-    //   return (
-    //     <View style={styles.center}>
-    //       <Ionicons
-    //         name={Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'}
-    //         size={100}
-    //       />
-    //       <Text>You already logged your information for today.</Text>
-    //       <TextButton style={{ padding: 10 }} onPress={this.reset}>
-    //         Reset
-    //       </TextButton>
-    //     </View>
-    //   )
-    // }
-
     return (
       <ContainerKeyboardAvoidingView behavior='padding'>
         <TitleText>
           What is the title of your new deck?
+          {/* {this.state.title} */}
         </TitleText>
         <DeckTitleInput
           placeholder="Deck Title"
-          onChangeText={(text) => this.setState({ text })}
-          value={this.state.text}
+          onChangeText={(title) => this.setState({ title })}
+          value={this.state.title}
         />
         {Platform.OS === 'ios'
           ? <IosSubmitBtn onPress={this.submit}>
@@ -143,7 +116,7 @@ class NewDeck extends Component {
 
 const ContainerKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
-  background-color: white;
+  background-color: ${white};
   justify-content: center;
   padding: 20px;
 `
@@ -186,7 +159,7 @@ const AndroidSubmitBtn = styled.TouchableOpacity`
   align-items: center;
 `
 const SubmitBtnText = styled.Text`
-  color: white;
+  color: ${white};
   font-size: 22;
   text-align: center;
 `
@@ -202,4 +175,5 @@ function mapStateToProps(state) {
 // export default connect(
 //   mapStateToProps
 // )(NewDeck)
+// export default connect(NewDeck)
 export default NewDeck
