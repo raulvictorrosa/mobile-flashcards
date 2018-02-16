@@ -9,14 +9,13 @@ import {
 import styled from 'styled-components/native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import Thunk from 'redux-thunk';
 import Reducers from './reducers'
 import NewDeck from './components/NewDeck'
 import DeckList from './components/DeckList'
 import { black, yellow, white } from './utils/colors'
-// import EntryDetail from './components/EntryDetail'
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -76,7 +75,6 @@ const StatusBarView = styled.View`
 `
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-// const store = createStore(Reducers);
 const store = createStore(
   Reducers,
   composeEnhancers(
