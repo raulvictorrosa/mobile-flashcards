@@ -8,14 +8,7 @@ import {
   Platform
 } from 'react-native'
 import styled from 'styled-components/native';
-import {
-//   getMetricMetaInfo,
-  timeToString,
-//   getDailyReminderValue,
-//   clearLocalNotification,
-//   setLocalNotification
-} from '../utils/helpers'
-import { submitEntry, removeEntry } from '../api'
+import * as Api from '../api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { black, purple, white } from '../utils/colors'
@@ -26,60 +19,28 @@ class NewDeck extends React.Component {
     title: '',
     error: false,
   }
-  // increment = (metric) => {
-  //   const { max, step } = getMetricMetaInfo(metric)
-
-  //   this.setState((state) => {
-  //     const count = state[metric] + step
-
-  //     return {
-  //       ...state,
-  //       [metric]: count > max ? max : count,
-  //     }
-  //   })
-  // }
-  // decrement = (metric) => {
-  //   this.setState((state) => {
-  //     const count = state[metric] - getMetricMetaInfo(metric).step
-
-  //     return {
-  //       ...state,
-  //       [metric]: count < 0 ? 0 : count,
-  //     }
-  //   })
-  // }
-  // slide = (metric, value) => {
-  //   this.setState(() => ({
-  //     [metric]: value
-  //   }))
-  // }
   handleSubmit = () => {
     const { title } = this.state
-    if (title) {
-      // this.props.dispatch(addDeck({
-      //   [key]: deck
-      // }))
-      addDeck(title)
-      this.setState(() => ({ title: '' }))
-
-      this.toHome()
-      // this.props.navigation.navigate(
-      //   'DeckDetail',
-      //   {
-      //     entryId: titleText,
-      //     navTitle: titleText
-      //   },
-        Keyboard.dismiss()
-      // )
-
-      // submitEntry({ key, deck })
-
-    //   clearLocalNotification()
-    //     .then(setLocalNotification)
-
-    } else {
-      this.setState({ error: true })
+    const deck = {
+      title,
+      questions: []
     }
+    this.props.dispatch(addDeck(deck))
+    this.setState(() => ({ title: '' }))
+    this.toHome()
+    // this.props.navigation.navigate(
+    //   'DeckDetail',
+    //   {
+    //     entryId: titleText,
+    //     navTitle: titleText
+    //   },
+    Keyboard.dismiss()
+    // )
+
+    Api.addDeck(title)
+
+  //   clearLocalNotification()
+  //     .then(setLocalNotification)
   }
   toHome = () => {
     this.props.navigation.dispatch(
@@ -87,16 +48,16 @@ class NewDeck extends React.Component {
     )
   }
   render() {
+    const { title } = this.state
     return (
       <ContainerKeyboardAvoidingView behavior='padding'>
         <TitleText>
           What is the title of your new deck?
-          {/* {this.state.title} */}
         </TitleText>
         <DeckTitleInput
           placeholder="Deck Title"
           onChangeText={(title) => this.setState({ title })}
-          value={this.state.title}
+          value={title}
         />
         {Platform.OS === 'ios'
           ? <IosSubmitBtn onPress={this.handleSubmit}>
@@ -114,7 +75,6 @@ class NewDeck extends React.Component {
 const ContainerKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
   background-color: ${white};
-  justify-content: center;
   padding: 20px;
 `
 const TitleText = styled.Text`
@@ -161,16 +121,4 @@ const SubmitBtnText = styled.Text`
   text-align: center;
 `
 
-function mapStateToProps(state) {
-  const key = timeToString()
-
-  return {
-    alreadyLogged: state[key] && typeof state[key].today === 'undefined'
-  }
-}
-
-// export default connect(
-//   mapStateToProps
-// )(NewDeck)
-// export default connect(NewDeck)
-export default NewDeck
+export default connect()(NewDeck)
