@@ -9,43 +9,55 @@ import {
 import styled from 'styled-components/native';
 import { connect } from 'react-redux'
 import { fetchDecks } from '../actions'
-import { getDecks } from '../api'
+import * as Api from '../api'
 import { black, white } from '../utils/colors'
 // import { AppLoading } from 'expo'
 
-class Decks extends Component {
+class DecksList extends Component {
   componentDidMount() {
     const { dispatch } = this.props
-    getDecks().then((decks) => dispatch(fetchDecks(decks)))
-      // .then(() => this.setState(() => ({ ready: true })))
+    Api.fetchDecks().then((decks) => dispatch(fetchDecks({decks})))
+    // .then(() => this.setState(() => ({ ready: true })))
+    // Api.fetchDecks()
   }
 
   // onPress = () => {
+  //   this.props.navigate(SCREENS.DECK_BOARD, { deck: deck.title })
   //   this.setState({
   //     count: this.state.count + 1
   //   })
   // }
 
+  // renderItem = ({ item }) => {
+  //   return (
+  //     <ItemDeckView key={item.title} onPress={this.onPress}>
+  //       <TextTitleDeck>{item.title}</TextTitleDeck>
+  //       <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
+  //     </ItemDeckView>
+  //   )
+  // }
 
   render() {
     const { decks } = this.props
+    console.log(decks)
     return (
       <ContainerView>
         {/* <TextTitleDeck>{this.state.count}</TextTitleDeck> */}
-        <TextTitleDeck>{decks.length}</TextTitleDeck>
-        <FlatList
-          data={decks}
-          renderItem={({ item }) =>
-          decks.length === 0
-            ? <ItemDeckView>
-                <TextTitleDeck>No deck registred.</TextTitleDeck>
-              </ItemDeckView>
-            : <ItemDeckView key={item.title} onPress={this.onPress}>
+        {decks.length < 0 || decks.length == undefined
+          ? <ItemDeckView>
+              <TextTitleDeck>No deck registred.</TextTitleDeck>
+              <TextSubTitleCard></TextSubTitleCard>
+            </ItemDeckView>
+          : <FlatList
+            data={decks}
+            renderItem={({item}) =>
+              <ItemDeckView key={item.title} onPress={this.onPress}>
                 <TextTitleDeck>{item.title}</TextTitleDeck>
                 <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
               </ItemDeckView>
-          }
-        />
+            }
+          />
+        }
       </ContainerView>
     )
   }
@@ -81,10 +93,16 @@ const TextSubTitleCard = styled.Text`
   padding-top: 20;
 `
 
-// const mapStateToProps = state => {
-//   const DBdata = state.decks;
+// function mapStateToProps({ decks, questions }) {
+//   if (decks == undefined)
+//     console.log('teste')
 
-//   return { DBdata };
+//   return {
+//     decks: decks.map(title => ({
+//       title,
+//       questions: questions.filter(question => question.deck === title)
+//     }))
+//   }
 // }
 function mapStateToProps(decks) {
   return {
@@ -92,10 +110,6 @@ function mapStateToProps(decks) {
   }
 }
 
-// export default connect(
-//   mapStateToProps,
-//   { fetchDecks }
-// )(Decks)
 export default connect(
   mapStateToProps,
-)(Decks)
+)(DecksList)
