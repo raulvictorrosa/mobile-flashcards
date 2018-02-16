@@ -11,52 +11,51 @@ import { connect } from 'react-redux'
 import { fetchDecks } from '../actions'
 import * as Api from '../api'
 import { black, white } from '../utils/colors'
-// import { AppLoading } from 'expo'
 
 class DecksList extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     Api.fetchDecks().then((decks) => dispatch(fetchDecks({decks})))
-    // .then(() => this.setState(() => ({ ready: true })))
-    // Api.fetchDecks()
   }
 
-  // onPress = () => {
-  //   this.props.navigate(SCREENS.DECK_BOARD, { deck: deck.title })
-  //   this.setState({
-  //     count: this.state.count + 1
-  //   })
-  // }
+  onPress = (deck) => {
+  //   alert(deck.title)
+    console.log(deck)
 
-  // renderItem = ({ item }) => {
-  //   return (
-  //     <ItemDeckView key={item.title} onPress={this.onPress}>
-  //       <TextTitleDeck>{item.title}</TextTitleDeck>
-  //       <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
-  //     </ItemDeckView>
-  //   )
-  // }
+    // this.props.navigation.navigate(
+    //   'DeckView',
+    //   {
+    //     entryId: item.key,
+    //     navTitle: item.title
+    //   }
+    // )
+  }
+
+  renderItem = (item) => {
+    return (
+      <ItemDeckView
+        key={item.title}
+        onPress={() => this.onPress(item)}
+      >
+        <TextTitleDeck>{item.title}</TextTitleDeck>
+        <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
+      </ItemDeckView>
+    )
+  }
 
   render() {
     const { decks } = this.props
-    console.log(decks)
     return (
       <ContainerView>
-        {/* <TextTitleDeck>{this.state.count}</TextTitleDeck> */}
         {decks.length < 0 || decks.length == undefined
           ? <ItemDeckView>
               <TextTitleDeck>No deck registred.</TextTitleDeck>
               <TextSubTitleCard></TextSubTitleCard>
             </ItemDeckView>
           : <FlatList
-            data={decks}
-            renderItem={({item}) =>
-              <ItemDeckView key={item.title} onPress={this.onPress}>
-                <TextTitleDeck>{item.title}</TextTitleDeck>
-                <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
-              </ItemDeckView>
-            }
-          />
+              data={decks}
+              renderItem={({item}) => this.renderItem(item)}
+            />
         }
       </ContainerView>
     )
@@ -93,17 +92,6 @@ const TextSubTitleCard = styled.Text`
   padding-top: 20;
 `
 
-// function mapStateToProps({ decks, questions }) {
-//   if (decks == undefined)
-//     console.log('teste')
-
-//   return {
-//     decks: decks.map(title => ({
-//       title,
-//       questions: questions.filter(question => question.deck === title)
-//     }))
-//   }
-// }
 function mapStateToProps(decks) {
   return {
     decks

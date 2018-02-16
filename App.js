@@ -15,6 +15,7 @@ import Thunk from 'redux-thunk';
 import Reducers from './reducers'
 import NewDeck from './components/NewDeck'
 import DeckList from './components/DeckList'
+import DeckView from './components/DeckView'
 import { black, yellow, white } from './utils/colors'
 
 const Tabs = TabNavigator({
@@ -55,15 +56,15 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
   },
-  // EntryDetail: {
-  //   screen: EntryDetail,
-  //   navigationOptions: {
-  //     headerTintColor: white,
-  //     headerStyle: {
-  //       backgroundColor: yellow,
-  //     }
-  //   }
-  // }
+  DeckView: {
+    screen: DeckView,
+    navigationOptions: {
+      headerTintColor: black,
+      headerStyle: {
+        backgroundColor: white
+      }
+    }
+  }
 })
 
 const ContainerView = styled.View`
