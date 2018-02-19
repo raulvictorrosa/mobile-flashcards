@@ -33,13 +33,13 @@ class DecksList extends Component {
 
   renderItem = (item) => {
     return (
-      <ItemDeckView
+      <TouchableItemDeckView
         key={item.title}
         onPress={() => this.onPress(item)}
       >
         <TextTitleDeck>{item.title}</TextTitleDeck>
         <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
-      </ItemDeckView>
+      </TouchableItemDeckView>
     )
   }
 
@@ -48,10 +48,10 @@ class DecksList extends Component {
     return (
       <ContainerView>
         {decks.length < 0 || decks.length == undefined
-          ? <ItemDeckView>
+          ? <TouchableItemDeckView>
               <TextTitleDeck>No deck registred.</TextTitleDeck>
               <TextSubTitleCard></TextSubTitleCard>
-            </ItemDeckView>
+            </TouchableItemDeckView>
           : <FlatList
               data={decks}
               renderItem={({item}) => this.renderItem(item)}
@@ -66,7 +66,7 @@ const ContainerView = styled.View`
   flex: 1;
   padding-bottom: 40;
 `
-const ItemDeckView = styled.TouchableOpacity`
+const TouchableItemDeckView = styled.TouchableOpacity`
   background-color: ${white};
   border-radius: ${Platform.OS === 'ios' ? 16 : 2};
   padding: 20px;
