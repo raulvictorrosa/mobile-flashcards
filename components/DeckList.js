@@ -19,16 +19,10 @@ class DecksList extends Component {
   }
 
   onPress = (deck) => {
-  //   alert(deck.title)
-    console.log(deck)
-
-    // this.props.navigation.navigate(
-    //   'DeckView',
-    //   {
-    //     entryId: item.key,
-    //     navTitle: item.title
-    //   }
-    // )
+    this.props.navigation.navigate(
+      'DeckView',
+      { deck }
+    )
   }
 
   renderItem = (item) => {
