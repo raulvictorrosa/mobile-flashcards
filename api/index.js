@@ -12,6 +12,10 @@ export function fetchDecks() {
   })
 }
 
+export function fetchDeck(key) {
+  return AsyncStorage.getItem(key)
+}
+
 export function addDeck(deck) {
   try {
     return AsyncStorage.setItem(
