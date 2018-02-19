@@ -27,25 +27,15 @@ class NewDeck extends React.Component {
     }
     this.props.dispatch(addDeck(deck))
     this.setState(() => ({ title: '' }))
-    this.toHome()
-    // this.props.navigation.navigate(
-    //   'DeckDetail',
-    //   {
-    //     entryId: titleText,
-    //     navTitle: titleText
-    //   },
+    this.props.navigation.navigate(
+      'DeckView',
+      { deck }
+    )
     Keyboard.dismiss()
-    // )
-
-    Api.addDeck(title)
+    Api.addDeck(deck)
 
   //   clearLocalNotification()
   //     .then(setLocalNotification)
-  }
-  toHome = () => {
-    this.props.navigation.dispatch(
-      NavigationActions.back({ key: 'NewDeck' })
-    )
   }
   render() {
     const { title } = this.state
