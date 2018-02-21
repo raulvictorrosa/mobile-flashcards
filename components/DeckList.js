@@ -25,14 +25,13 @@ class DecksList extends Component {
     )
   }
 
-  renderItem = (item) => {
+  renderItem = (deck) => {
     return (
       <TouchableItemDeckView
-        key={item.title}
-        onPress={() => this.onPress(item)}
+        onPress={() => this.onPress(deck)}
       >
-        <TextTitleDeck>{item.title}</TextTitleDeck>
-        <TextSubTitleCard>{item.questions.length} cards</TextSubTitleCard>
+        <TextTitleDeck>{deck.title}</TextTitleDeck>
+        <TextSubTitleCard>{deck.questions.length} cards</TextSubTitleCard>
       </TouchableItemDeckView>
     )
   }
@@ -48,7 +47,8 @@ class DecksList extends Component {
             </TouchableItemDeckView>
           : <FlatList
               data={decks}
-              renderItem={({item}) => this.renderItem(item)}
+              renderItem={({ item }) => this.renderItem(item)}
+              keyExtractor={(item, index) => index}
             />
         }
       </ContainerView>
