@@ -59,10 +59,11 @@ const MainNavigator = StackNavigator({
   DeckView: {
     screen: DeckView,
     navigationOptions: {
-      headerTintColor: black,
+      headerTintColor: white,
       headerStyle: {
-        backgroundColor: white
-      }
+        backgroundColor: black,
+        height: 30
+      },
     }
   }
 })
