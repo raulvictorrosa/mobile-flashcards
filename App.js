@@ -65,6 +65,15 @@ const MainNavigator = StackNavigator({
         height: 30
       },
     }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor:black,
+      }
+    }
   }
 })
 
