@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { black, purple, white } from '../utils/colors'
 import { NavigationActions } from 'react-navigation'
+import { Button } from './Button'
 
 class NewDeck extends React.Component {
   state = {
@@ -49,66 +50,33 @@ class NewDeck extends React.Component {
           onChangeText={(title) => this.setState({ title })}
           value={title}
         />
-        {Platform.OS === 'ios'
-          ? <IosSubmitBtn onPress={this.handleSubmit}>
-              <SubmitBtnText>Submit</SubmitBtnText>
-            </IosSubmitBtn>
-          : <AndroidSubmitBtn onPress={this.handleSubmit}>
-              <SubmitBtnText>Submit</SubmitBtnText>
-            </AndroidSubmitBtn>
-        }
+        <Button onPress={this.handleSubmit}>Submit</Button>
       </ContainerKeyboardAvoidingView>
     )
   }
 }
 
 const ContainerKeyboardAvoidingView = styled.KeyboardAvoidingView`
-  flex: 1;
   background-color: ${white};
+  flex: 1;
   padding: 20px;
 `
 const TitleText = styled.Text`
   color: ${black};
-  fontSize: 40;
-  textAlign: center;
-  paddingTop: 20;
-  paddingBottom: 40;
+  font-size: 40px;
+  padding-bottom: 40;
+  padding-top: 20;
+  text-align: center;
 `
 const DeckTitleInput = styled.TextInput`
-  height: 40;
-  border-radius: 6;
   border-color: ${black};
+  border-radius: 6;
   border-width: 1;
-  padding-top: 2;
+  height: 40;
   padding-bottom: 2;
   padding-left: 4;
   padding-right: 4;
-`
-const IosSubmitBtn = styled.TouchableOpacity`
-  backgroundColor: ${black};
-  padding: 10px;
-  border-radius: 7;
-  height: 45;
-  margin-left: 40;
-  margin-right: 40;
-  margin-top: 40;
-`
-const AndroidSubmitBtn = styled.TouchableOpacity`
-  backgroundColor: ${black};
-  padding: 10px;
-  padding-left: 30;
-  padding-right: 30;
-  height: 45;
-  border-radius: 4;
-  margin-top: 40;
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-`
-const SubmitBtnText = styled.Text`
-  color: ${white};
-  font-size: 22;
-  text-align: center;
+  padding-top: 2;
 `
 
 export default connect()(NewDeck)
