@@ -28,10 +28,10 @@ export const ButtonOutline = ({ children, onPress, style = {} }) => {
     <View>
       {Platform.OS === 'ios'
         ? <IosBtnOutline onPress={onPress} style={style}>
-            <BtnOutlineText>Submit</BtnOutlineText>
+            <BtnOutlineText>{children}</BtnOutlineText>
           </IosBtnOutline>
         : <AndroidBtnOutline onPress={onPress} style={style}>
-            <BtnOutlineText>Submit</BtnOutlineText>
+            <BtnOutlineText>{children}</BtnOutlineText>
           </AndroidBtnOutline>
       }
     </View>
