@@ -1,5 +1,6 @@
-export const black = '#333'
+export const black = 'black'
 export const blue = '#4e4cb8'
+export const dark = '#333'
 export const gray = '#757575'
 export const lightPurp = '#7c53c3'
 export const orange = '#f26f28'
