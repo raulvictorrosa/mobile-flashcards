@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native'
-import styled from 'styled-components/native';
 import { connect } from 'react-redux'
 import { fetchDecks } from '../actions'
 import * as Api from '../api'
+import styled from 'styled-components/native';
 import { black, white } from '../utils/colors'
 
 class DecksList extends Component {
