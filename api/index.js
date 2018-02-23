@@ -27,6 +27,22 @@ export function addDeck(deck) {
   }
 }
 
+export function addCard(key, card) {
+  try {
+    return fetchDeck(key).then(result => {
+      const value = JSON.parse(result)
+      let { questions } = value
+      questions.push(card)
+
+      AsyncStorage.mergeItem(key, JSON.stringify({
+        questions
+      }))
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function removeEntry(key) {
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then((results) => {
