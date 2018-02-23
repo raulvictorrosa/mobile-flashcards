@@ -1,4 +1,4 @@
-import { FETCH_DECKS, FETCH_DECK, ADD_DECK } from '../actions'
+import { FETCH_DECKS, FETCH_DECK, ADD_DECK, ADD_CARD } from '../actions'
 
 function decks (state = {}, action) {
   switch (action.type) {
@@ -16,6 +16,15 @@ function decks (state = {}, action) {
         ...state,
         action.deck
       ]
+
+    case ADD_CARD :
+      return {
+        ...state,
+      //   [action.key]: {,
+      //     ...state,
+      //     questions: action.card
+      //   }
+      }
 
     // case DELETE_DECK:
     //   return action.deck;
