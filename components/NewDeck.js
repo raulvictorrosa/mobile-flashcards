@@ -2,10 +2,8 @@ import React from 'react'
 import {
   Text,
   TextInput,
-  TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
-  Platform
 } from 'react-native'
 import styled from 'styled-components/native';
 import * as Api from '../api'
@@ -20,24 +18,25 @@ class NewDeck extends React.Component {
     title: '',
     error: false,
   }
+
   handleSubmit = () => {
+    const { dispatch, navigate } = this.props
     const { title } = this.state
     const deck = {
       title,
       questions: []
     }
-    this.props.dispatch(addDeck(deck))
+
+    dispatch(addDeck(deck))
     this.setState(() => ({ title: '' }))
-    this.props.navigation.navigate(
-      'DeckView',
-      { deck }
-    )
+    navigate('DeckView', { deck })
     Keyboard.dismiss()
     Api.addDeck(deck)
 
   //   clearLocalNotification()
   //     .then(setLocalNotification)
   }
+
   render() {
     const { title } = this.state
     return (
@@ -53,6 +52,12 @@ class NewDeck extends React.Component {
         <Button onPress={this.handleSubmit}>Submit</Button>
       </ContainerKeyboardAvoidingView>
     )
+  }
+}
+
+function mapDispatchToProps(dispatch, { navigation }) {
+  return {
+    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
   }
 }
 
@@ -79,4 +84,6 @@ const DeckTitleInput = styled.TextInput`
   padding-top: 2;
 `
 
-export default connect()(NewDeck)
+export default connect(
+  mapDispatchToProps
+)(NewDeck)
