@@ -18,17 +18,10 @@ class DecksList extends Component {
     Api.fetchDecks().then((decks) => dispatch(fetchDecks({decks})))
   }
 
-  onPress = (deck) => {
-    this.props.navigation.navigate(
-      'DeckView',
-      { deck }
-    )
-  }
-
   renderItem = (deck) => {
     return (
       <TouchableItemDeckView
-        onPress={() => this.onPress(deck)}
+        onPress={() => this.props.navigation.navigate('DeckView', { deck })}
       >
         <TextTitleDeck>{deck.title}</TextTitleDeck>
         <TextSubTitleCard>{deck.questions.length} cards</TextSubTitleCard>
@@ -93,5 +86,5 @@ function mapStateToProps(decks) {
 }
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
 )(DecksList)
