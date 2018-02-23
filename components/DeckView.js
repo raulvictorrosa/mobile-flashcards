@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  TouchableOpacity,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 import styled from 'styled-components/native';
 import { black, dark, white } from '../utils/colors'
 import { Button, ButtonOutline } from './Button'
@@ -20,9 +18,8 @@ class DeckView extends Component {
   }
 
   addCard = () => {
-    this.props.navigation.navigate(
-      'AddCard'
-    )
+    const { deck, navigation } = this.props
+    navigation.navigate('AddCard', { deck })
   }
 
   startQuiz = () => {
@@ -31,7 +28,6 @@ class DeckView extends Component {
 
   render() {
     const { deck } = this.props
-    console.log(deck)
     return (
       <ContainerView>
         <ItemViewText>
@@ -39,8 +35,8 @@ class DeckView extends Component {
           <TextSubTitleCard>{deck.questions.length} cards</TextSubTitleCard>
         </ItemViewText>
         <ButtonOutline
-          onPress={this.props.navigation.navigate('AddCard', {})}
-          style={{ height: 55, marginTop: 130, }}
+          onPress={this.addCard}
+          style={{ height: 55, marginTop: 10, }}
         >
           Add Card
         </ButtonOutline>
@@ -57,30 +53,26 @@ class DeckView extends Component {
 
 function mapStateToProps(state, { navigation }) {
   const { deck } = navigation.state.params
-
   return {
     deck
   }
 }
 
-// function mapDispatchToProps(dispatch, { navigation }) {
-//   const { entryId } = navigation.state.params
+function mapDispatchToProps(dispatch, { navigation }) {
+  return {
+    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
+  }
+}
 
-//   return {
-//     remove: () => dispatch(addEntry({
-//       [entryId]: timeToString() === entryId
-//         ? getDailyReminderValue()
-//         : null
-//     })),
-//     goBack: () => navigation.goBack(),
-//   }
-// }
 
 const ContainerView = styled.View`
   background-color: ${white};
   flex: 1;
   padding: 15px;
   padding-top: 132;
+`
+const ItemViewText = styled.View`
+  height: 226px;
 `
 const TextTitleDeck = styled.Text`
   color: ${black};
@@ -89,12 +81,12 @@ const TextTitleDeck = styled.Text`
 `
 const TextSubTitleCard = styled.Text`
   color: #757575;
-  font-size: 26px;
+  font-size: 24px;
   padding-top: 8px;
   text-align: center;
 `
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps,
+  mapDispatchToProps
 )(DeckView)
