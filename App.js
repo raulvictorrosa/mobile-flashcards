@@ -16,6 +16,7 @@ import Reducers from './reducers'
 import NewDeck from './components/NewDeck'
 import DeckList from './components/DeckList'
 import DeckView from './components/DeckView'
+import AddCard from './components/AddCard'
 import { black, yellow, white } from './utils/colors'
 
 const Tabs = TabNavigator({
@@ -62,16 +63,18 @@ const MainNavigator = StackNavigator({
       headerTintColor: white,
       headerStyle: {
         backgroundColor: black,
-        height: 30
-      },
+        marginTop: -25
+      }
     }
   },
   AddCard: {
     screen: AddCard,
     navigationOptions: {
+      headerTitle: 'Add Card',
       headerTintColor: white,
       headerStyle: {
-        backgroundColor:black,
+        backgroundColor: black,
+        marginTop: -25
       }
     }
   }
