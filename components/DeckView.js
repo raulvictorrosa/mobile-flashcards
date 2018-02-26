@@ -4,22 +4,22 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { fetchDeck } from '../actions';
+import { getDeck } from '../api'
 import styled from 'styled-components/native';
 import { black, dark, white } from '../utils/colors'
 import { Button, ButtonOutline } from './Button'
 
 class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { title } = navigation.state.params.deck
-
     return {
-      title
+      title: navigation.state.params.key
     }
   }
 
   addCard = () => {
-    const { deck, navigation } = this.props
-    navigation.navigate('AddCard', { deck })
+    const { deck, navigate } = this.props
+    navigate('AddCard', { key: deck.title })
   }
 
   startQuiz = () => {
@@ -52,9 +52,9 @@ class DeckView extends Component {
 }
 
 function mapStateToProps(state, { navigation }) {
-  const { deck } = navigation.state.params
+  const { key } = navigation.state.params
   return {
-    deck
+    deck: state[key]
   }
 }
 
