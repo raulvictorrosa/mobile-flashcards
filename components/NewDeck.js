@@ -20,21 +20,26 @@ class NewDeck extends React.Component {
   }
 
   handleSubmit = () => {
-    const { dispatch, navigate } = this.props
+    const { dispatch, navigate, goBack } = this.props
     const { title } = this.state
-    const deck = {
-      title,
-      questions: []
+    if (title !== '') {
+      const deck = {
+        title,
+        questions: []
+      }
+
+      dispatch(addDeck(deck))
+      this.setState(() => ({ title: '' }))
+      navigate('DeckView', { key: deck.title })
+
+      Keyboard.dismiss()
+      Api.addDeck(deck)
+
+      //   clearLocalNotification()
+      //     .then(setLocalNotification)
+    } else {
+      alert(`The title of the deck can't be empty!`)
     }
-
-    dispatch(addDeck(deck))
-    this.setState(() => ({ title: '' }))
-    navigate('DeckView', { deck })
-    Keyboard.dismiss()
-    Api.addDeck(deck)
-
-  //   clearLocalNotification()
-  //     .then(setLocalNotification)
   }
 
   render() {
@@ -49,7 +54,9 @@ class NewDeck extends React.Component {
           onChangeText={(title) => this.setState({ title })}
           value={title}
         />
-        <Button onPress={this.handleSubmit}>Submit</Button>
+        <Button onPress={this.handleSubmit}>
+          Submit
+        </Button>
       </ContainerKeyboardAvoidingView>
     )
   }
@@ -57,7 +64,7 @@ class NewDeck extends React.Component {
 
 function mapDispatchToProps(dispatch, { navigation }) {
   return {
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
+    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params),
   }
 }
 
