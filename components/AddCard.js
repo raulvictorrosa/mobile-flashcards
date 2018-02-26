@@ -37,6 +37,7 @@ class AddCard extends Component {
       }))
       Keyboard.dismiss()
       addCardToDeck(deck.title, questions)
+      alert(`Question added with success`)
     }
   }
 
