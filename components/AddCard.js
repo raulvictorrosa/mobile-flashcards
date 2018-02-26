@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { addCard } from '../actions';
-import * as Api from '../api'
+import { addCardToDeck } from '../api'
 import styled from 'styled-components/native';
 import { black, dark, white } from '../utils/colors'
 import { Button, ButtonOutline } from './Button'
@@ -18,12 +18,8 @@ class AddCard extends Component {
   }
 
   handleSubmit = () => {
-    const { deck, dispatch, navigation } = this.props
+    const { deck, add } = this.props
     const card = this.state
-
-    // console.log(this.props)
-    console.log(deck)
-    console.log(card)
 
     if (card.question == '') {
       alert(`The question field can't be empty`)
@@ -32,15 +28,15 @@ class AddCard extends Component {
       alert(`The answer field can't be empty`)
     }
     else {
-      // console.log('teste', addCard(deck.title, card))
-      console.log(dispatch(addCard(card)))
+      let { questions } = deck
+      questions.push(card)
+      add(deck.title, questions)
       this.setState(() => ({
         question: '',
         answer: ''
       }))
-      // navigate('DeckView', { deck })
       Keyboard.dismiss()
-      // Api.addCard(deck)
+      addCardToDeck(deck.title, questions)
     }
   }
 
@@ -52,6 +48,7 @@ class AddCard extends Component {
           placeholder="Your question"
           onChangeText={(question) => this.setState({ question })}
           value={question}
+          style={{ marginBottom: 40 }}
         />
         <DeckInput
           placeholder="The answer"
@@ -81,14 +78,15 @@ const DeckInput = styled.TextInput`
 `
 
 function mapStateToProps(state, { navigation }) {
-  const { deck } = navigation.state.params
+  const { key } = navigation.state.params
   return {
-    deck
+    deck: state[key]
   }
 }
 
 function mapDispatchToProps(dispatch, { navigation }) {
   return {
+    add: (key, card) => dispatch(addCard(key, card)),
     navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
   }
 }
