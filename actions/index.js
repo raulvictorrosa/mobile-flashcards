@@ -13,7 +13,7 @@ export function fetchDecks (decks) {
 export function fetchDeck (deck) {
   return {
     type: FETCH_DECK,
-    decks,
+    deck,
   }
 }
 
@@ -24,10 +24,10 @@ export function addDeck (deck) {
   }
 }
 
-export function addCard (key, card) {
+export function addCard (key, cards) {
   return {
     type: ADD_CARD,
     key,
-    card
+    cards
   }
 }
