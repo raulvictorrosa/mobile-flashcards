@@ -21,7 +21,7 @@ class DecksList extends Component {
   renderItem = (deck) => {
     return (
       <TouchableItemDeckView
-        onPress={() => this.props.navigation.navigate('DeckView', { deck })}
+        onPress={() => this.props.navigation.navigate('DeckView', { key: deck.title })}
       >
         <TextTitleDeck>{deck.title}</TextTitleDeck>
         <TextSubTitleCard>{deck.questions.length} cards</TextSubTitleCard>
@@ -31,15 +31,16 @@ class DecksList extends Component {
 
   render() {
     const { decks } = this.props
+    const listOfDecks = Object.keys(decks).map(key => decks[key])
     return (
       <ContainerView>
-        {decks.length < 0 || decks.length == undefined
+        {listOfDecks.length <= 0
           ? <TouchableItemDeckView>
               <TextTitleDeck>No deck registred.</TextTitleDeck>
               <TextSubTitleCard></TextSubTitleCard>
             </TouchableItemDeckView>
           : <FlatList
-              data={decks}
+              data={listOfDecks}
               renderItem={({ item }) => this.renderItem(item)}
               keyExtractor={(item, index) => index}
             />
