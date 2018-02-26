@@ -23,7 +23,8 @@ class DeckView extends Component {
   }
 
   startQuiz = () => {
-    console.log('Start Quiz')
+    const { deck, navigate } = this.props
+    navigate('QuizView', { key: deck.title })
   }
 
   render() {
