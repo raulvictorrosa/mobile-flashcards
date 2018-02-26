@@ -12,7 +12,7 @@ export function fetchDecks() {
   })
 }
 
-export function fetchDeck(key) {
+export function getDeck(key) {
   return AsyncStorage.getItem(key)
 }
 
@@ -27,20 +27,23 @@ export function addDeck(deck) {
   }
 }
 
-export function addCard(key, card) {
-  try {
-    return fetchDeck(key).then(result => {
-      const value = JSON.parse(result)
-      let { questions } = value
-      questions.push(card)
+export function addCardToDeck(key, cards) {
+  console.log(key)
+  console.log(cards)
+  console.log(AsyncStorage.getItem(key))
+  // try {
+  //   return getDeck(key).then(result => {
+  //     const value = JSON.parse(result)
+  //     let { questions } = value
+  //     questions = cards
 
-      AsyncStorage.mergeItem(key, JSON.stringify({
-        questions
-      }))
-    })
-  } catch (error) {
-    console.log(error);
-  }
+  //     AsyncStorage.mergeItem(key, JSON.stringify({
+  //       questions
+  //     }))
+  //   })
+  // } catch (error) {
+  //   console.log(error);
+  // }
 }
 
 export function removeEntry(key) {
