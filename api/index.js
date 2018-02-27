@@ -1,52 +1,39 @@
 import { AsyncStorage } from 'react-native'
 
+export const FLASHCARDS_STORAGE_KEY = 'MobileFlashcards:decks'
+
 export function fetchDecks() {
-  return AsyncStorage.getAllKeys().then(keys => {
-    return AsyncStorage.multiGet().then(stores => {
-      return stores.map((result, i, store) => {
-        // get at each store's key/value so you can work with it
-        let key = store[i][0];
-        let value = JSON.parse(store[i][1]);
-      })
-    })
-  })
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+    .then(decks => JSON.parse(decks))
 }
 
 export function getDeck(key) {
-  return AsyncStorage.getItem(key)
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+    .then(decks => JSON.parse(decks)[key])
 }
 
-export function addDeck(deck) {
-  try {
-    return AsyncStorage.setItem(
-      deck.title,
-      JSON.stringify( deck )
-    )
-  } catch (error) {
-    console.log(error);
-  }
+export function addDeck(title) {
+  return AsyncStorage.mergeItem(
+    FLASHCARDS_STORAGE_KEY, JSON.stringify({
+      [title]: {
+        title,
+        questions: []
+      }
+    })
+  )
 }
 
 export function addCardToDeck(key, cards) {
-  console.log(key)
-  console.log(cards)
-  console.log(AsyncStorage.getItem(key))
-  // try {
-  //   return getDeck(key).then(result => {
-  //     const value = JSON.parse(result)
-  //     let { questions } = value
-  //     questions = cards
-
-  //     AsyncStorage.mergeItem(key, JSON.stringify({
-  //       questions
-  //     }))
-  //   })
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  return getDeck(key)
+    .then(deck => {
+      deck.questions.push(card)
+      AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({
+        [key]: deck
+      }))
+    })
 }
 
-export function removeEntry(key) {
+export function removeAllDecks(key) {
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then((results) => {
       const deck = JSON.parse(results)

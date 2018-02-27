@@ -19,36 +19,32 @@ class AddCard extends Component {
   }
 
   handleSubmit = () => {
-    const { deck, add } = this.props
+    const { add } = this.props
     const card = this.state
 
     if (card.question == '') {
       Alert.alert(
-        '',
-        `The question field can't be empty 😊`,
+        '', `The question field can't be empty 😊`,
         [{ text: 'Close' }]
       )
-    }
-    else if (card.answer == '') {
+    } else if (card.answer == '') {
       Alert.alert(
-        '',
-        `The answer field can't be empty 😊`,
+        '', `The answer field can't be empty 😊`,
         [{ text: 'Close' }]
       )
-    }
-    else {
-      let { questions } = deck
-      questions.push(card)
-      add(deck.title, questions)
+    } else {
+      const { title } = this.props.deck
+      addCardToDeck(title, card)
+      add(title, card)
+
       this.setState(() => ({
         question: '',
         answer: ''
       }))
+
       Keyboard.dismiss()
-      addCardToDeck(deck.title, questions)
       Alert.alert(
-        '',
-        `Question added with success! 👍`,
+        '', `Question added with success! 👍`,
         [{ text: 'Close' }]
       )
     }
@@ -92,9 +88,9 @@ const DeckInput = styled.TextInput`
 `
 
 function mapStateToProps(state, { navigation }) {
-  const { key } = navigation.state.params
+  const { title } = navigation.state.params
   return {
-    deck: state[key]
+    title
   }
 }
 

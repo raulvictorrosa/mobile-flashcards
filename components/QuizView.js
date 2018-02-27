@@ -18,35 +18,17 @@ class QuizView extends Component {
     correctAnswers: 0,
     incorrectAnswers: 0
   }
-  nextQuestion = () => {
-    let current = this.state.currentQuestion
-    current++
-    this.setState(() => ({ currentQuestion: current }))
-  }
+
+  nextQuestion = () => this.setState(() => ({ currentQuestion: this.state.currentQuestion }))
 
   correct = () => {
+    this.setState(() => ({ correctAnswers: this.state.correctAnswers++ }))
     this.nextQuestion()
-
-    let correct = this.state.correctAnswers
-    correct++
-    this.setState(() => ({ correctAnswers: correct }))
   }
 
   incorrect = () => {
+    this.setState(() => ({ incorrectAnswers: this.state.incorrectAnswers++ }))
     this.nextQuestion()
-
-    let incorrect = this.state.incorrectAnswers
-    incorrect++
-    this.setState(() => ({ incorrectAnswers: incorrect }))
-  }
-
-  toggleQuestion = () => {
-    const { showAnswer } = this.state
-    if (showAnswer) {
-      this.setState(() => ({ showAnswer: false }))
-    } else {
-      this.setState(() => ({ showAnswer: true }))
-    }
   }
 
   render() {
@@ -64,7 +46,7 @@ class QuizView extends Component {
                 : questions[currentQuestion].question
               }
             </TextTitleDeck>
-            <Btn onPress={this.toggleQuestion} >
+            <Btn onPress={() => this.setState(() => ({ showAnswer: !this.state.showAnswer }))} >
               {showAnswer == true
                 ? <BtnText>Question</BtnText>
                 : <BtnText>Answer</BtnText>
@@ -102,14 +84,14 @@ const ContainerView = styled.View`
   background-color: ${white};
   flex: 1;
   padding: 15px;
-  `
+`
 const QtdQuestions = styled.Text`
   color: ${black};
   font-size: 20px;
 `
 const ItemViewText = styled.View`
   height: 226px;
-  padding-top: 132;
+  padding-top: 132px;
 `
 const TextTitleDeck = styled.Text`
   color: ${black};

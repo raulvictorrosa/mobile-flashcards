@@ -15,16 +15,17 @@ import { black, white } from '../utils/colors'
 class DecksList extends Component {
   componentDidMount() {
     const { dispatch } = this.props
-    Api.fetchDecks().then((decks) => dispatch(fetchDecks({decks})))
+    Api.fetchDecks().then((decks) => dispatch(fetchDecks({ decks })))
   }
 
   renderItem = (deck) => {
+    const { title, questions } = deck
     return (
       <TouchableItemDeckView
-        onPress={() => this.props.navigation.navigate('DeckView', { key: deck.title })}
+        onPress={() => this.props.navigation.navigate('DeckView', { title })}
       >
-        <TextTitleDeck>{deck.title}</TextTitleDeck>
-        <TextSubTitleCard>{deck.questions.length} cards</TextSubTitleCard>
+        <TextTitleDeck>{title}</TextTitleDeck>
+        <TextSubTitleCard>{questions.length} cards</TextSubTitleCard>
       </TouchableItemDeckView>
     )
   }

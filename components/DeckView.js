@@ -15,19 +15,21 @@ import { Button, ButtonOutline } from './Button'
 class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.state.params.key
+      title: navigation.state.params.title
     }
   }
 
   addCard = () => {
-    const { deck, navigate } = this.props
-    navigate('AddCard', { key: deck.title })
+    const { navigate } = this.props
+    const { title } = this.props.deck
+    navigate('AddCard', { title })
   }
 
   startQuiz = () => {
-    const { deck, navigate } = this.props
-    if (deck.questions.length > 0) {
-      navigate('QuizView', { key: deck.title })
+    const { navigate } = this.props
+    const { title } = this.props.deck
+    if (questions.length > 0) {
+      navigate('QuizView', { title })
     } else {
       Alert.alert(
         '',
@@ -40,12 +42,12 @@ class DeckView extends Component {
   }
 
   render() {
-    const { deck } = this.props
+    const { title, questions } = this.props.deck
     return (
       <ContainerView>
         <ItemViewText>
-          <TextTitleDeck>{deck.title}</TextTitleDeck>
-          <TextSubTitleCard>{deck.questions.length} cards</TextSubTitleCard>
+          <TextTitleDeck>{title}</TextTitleDeck>
+          <TextSubTitleCard>{questions.length} cards</TextSubTitleCard>
         </ItemViewText>
         <ButtonOutline
           onPress={this.addCard}
@@ -65,9 +67,9 @@ class DeckView extends Component {
 }
 
 function mapStateToProps(state, { navigation }) {
-  const { key } = navigation.state.params
+  const { title } = navigation.state.params
   return {
-    deck: state[key]
+    deck: state[title]
   }
 }
 

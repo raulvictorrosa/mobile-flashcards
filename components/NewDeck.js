@@ -24,24 +24,24 @@ class NewDeck extends React.Component {
     const { dispatch, navigate, goBack } = this.props
     const { title } = this.state
     if (title !== '') {
-      const deck = {
-        title,
-        questions: []
-      }
+      Api.addDeck(title)
+      dispatch(addDeck({
+        [title]: {
+          title,
+          questions: []
+        }
+      }))
 
-      dispatch(addDeck(deck))
       this.setState(() => ({ title: '' }))
-      navigate('DeckView', { key: deck.title })
+      navigate('DeckView', { title })
 
       Keyboard.dismiss()
-      Api.addDeck(deck)
 
       //   clearLocalNotification()
       //     .then(setLocalNotification)
     } else {
       Alert.alert(
-        '',
-        `The title of the deck can't be empty!`,
+        '', `The title of the deck can't be empty!`,
         [{ text: 'Close' }]
       )
     }
