@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {
+  Alert,
   KeyboardAvoidingView,
   Keyboard,
   TextInput,
@@ -22,10 +23,18 @@ class AddCard extends Component {
     const card = this.state
 
     if (card.question == '') {
-      alert(`The question field can't be empty`)
+      Alert.alert(
+        '',
+        `The question field can't be empty 😊`,
+        [{ text: 'Close' }]
+      )
     }
     else if (card.answer == '') {
-      alert(`The answer field can't be empty`)
+      Alert.alert(
+        '',
+        `The answer field can't be empty 😊`,
+        [{ text: 'Close' }]
+      )
     }
     else {
       let { questions } = deck
@@ -37,7 +46,11 @@ class AddCard extends Component {
       }))
       Keyboard.dismiss()
       addCardToDeck(deck.title, questions)
-      alert(`Question added with success`)
+      Alert.alert(
+        '',
+        `Question added with success! 👍`,
+        [{ text: 'Close' }]
+      )
     }
   }
 
