@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {
+  Alert,
+  Platform,
   Text,
   View,
 } from 'react-native'
@@ -24,7 +26,17 @@ class DeckView extends Component {
 
   startQuiz = () => {
     const { deck, navigate } = this.props
-    navigate('QuizView', { key: deck.title })
+    if (deck.questions.length > 0) {
+      navigate('QuizView', { key: deck.title })
+    } else {
+      Alert.alert(
+        '',
+        `This deck don't have cards registred!
+
+      Add some cards to this deck. 😊`,
+        [ { text: 'Close' } ]
+      )
+    }
   }
 
   render() {
