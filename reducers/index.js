@@ -1,43 +1,41 @@
 import { FETCH_DECKS, FETCH_DECK, ADD_DECK, ADD_CARD } from '../actions'
 
-function decks (state = {}, action) {
+const decks = (state = {}, action) => {
   switch (action.type) {
-    case FETCH_DECKS :
-      return [
+    case FETCH_DECKS:
+      return {
         ...state,
-        action.decks
-      ]
+        ...action.decks
+      }
 
-    case FETCH_DECK :
+    case FETCH_DECK:
       return {
         ...state,
         ...action.deck
       }
 
-    case ADD_DECK :
-      const { deck } = action
+    case ADD_DECK:
       return {
         ...state,
-        [deck.title]: {
-          ...deck
-        }
+        ...action.deck
       }
 
-    case ADD_CARD :
+    case ADD_CARD:
       return {
         ...state,
         [action.key]: {
           ...state[action.key],
           questions: [
-            ...action.cards
+            ...state[action.key].questions,
+            action.card
           ]
         }
       }
 
-    // case DELETE_DECK:
-    //   return action.deck;
+    // case DELETE_ALL_DECKS:
+    //   return {}
 
-    default :
+    default:
       return state
   }
 }
