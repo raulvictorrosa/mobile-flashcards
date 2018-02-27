@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Alert,
   Text,
   TextInput,
   KeyboardAvoidingView,
@@ -38,7 +39,11 @@ class NewDeck extends React.Component {
       //   clearLocalNotification()
       //     .then(setLocalNotification)
     } else {
-      alert(`The title of the deck can't be empty!`)
+      Alert.alert(
+        '',
+        `The title of the deck can't be empty!`,
+        [{ text: 'Close' }]
+      )
     }
   }
 
