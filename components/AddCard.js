@@ -33,7 +33,7 @@ class AddCard extends Component {
         [{ text: 'Close' }]
       )
     } else {
-      const { title } = this.props.deck
+      const { title } = this.props
       addCardToDeck(title, card)
       add(title, card)
 
