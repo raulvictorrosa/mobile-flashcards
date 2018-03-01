@@ -19,6 +19,7 @@ import DeckView from './components/DeckView'
 import AddCard from './components/AddCard'
 import QuizView from './components/QuizView'
 import { black, yellow, white } from './utils/colors'
+import { setLocalNotification } from './utils/helpers'
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -109,6 +110,9 @@ const store = createStore(
 )
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={store}>

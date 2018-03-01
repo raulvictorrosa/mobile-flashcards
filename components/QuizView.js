@@ -8,32 +8,46 @@ import { connect } from 'react-redux'
 import { fetchDeck } from '../actions';
 import { getDeck } from '../api'
 import styled from 'styled-components/native';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import { black, green, red, white } from '../utils/colors'
 import { Button, ButtonOutline } from './Button'
 
 class QuizView extends Component {
-  state = {
+  initialState = {
     showAnswer: false,
     currentQuestion: 0,
     correctAnswers: 0,
     incorrectAnswers: 0
   }
 
-  nextQuestion = () => this.setState(() => ({ currentQuestion: this.state.currentQuestion }))
+  state = {
+    ...this.initialState
+  }
+
+  nextQuestion = () => this.setState(() => ({ currentQuestion: ++this.state.currentQuestion }))
 
   correct = () => {
-    this.setState(() => ({ correctAnswers: this.state.correctAnswers++ }))
+    this.setState(() => ({ correctAnswers: ++this.state.correctAnswers }))
     this.nextQuestion()
   }
 
   incorrect = () => {
-    this.setState(() => ({ incorrectAnswers: this.state.incorrectAnswers++ }))
+    this.setState(() => ({ incorrectAnswers: ++this.state.incorrectAnswers }))
     this.nextQuestion()
   }
 
   render() {
-    const { showAnswer, currentQuestion, correctAnswers } = this.state
-    const { questions } = this.props.deck
+    const { showAnswer, currentQuestion, correctAnswers, incorrectAnswers } = this.state
+    const { navigate } = this.props
+    const { title, questions } = this.props.deck
+    // console.log(currentQuestion)
+    // console.log(questions.length)
+
+    //It clears today notification and sets tomorrow notification
+    if (currentQuestion >= questions.length) {
+      clearLocalNotification()
+        .then(setLocalNotification)
+    }
 
     if (currentQuestion < questions.length) {
       return (
@@ -73,7 +87,31 @@ class QuizView extends Component {
     return (
       <ContainerView>
         <ItemViewText>
-          <TextTitleDeck>Finished!</TextTitleDeck>
+          <TextTitleDeck style={{marginBottom: 20}}>Finished!</TextTitleDeck>
+          {(incorrectAnswers > 0 && correctAnswers > 0) &&
+            <View>
+              <Result>✅ You're right in {correctAnswers} questions</Result>
+              <Result>❌ And wrong in {incorrectAnswers} questions</Result>
+            </View>
+          }
+          {(incorrectAnswers == 0) &&
+            <Result>✅ You got all the {questions.length} questions 👏</Result>
+          }
+          {(incorrectAnswers > 0 && correctAnswers == 0) &&
+            <Result>❌ You'are wrong in all the {questions.length} questions 😟</Result>
+          }
+          <Button
+            onPress={() => this.setState({ ...this.initialState })}
+            style={{ height: 55, marginTop: 50 }}
+          >
+            Restart Quiz
+          </Button>
+          <Button
+            onPress={() => navigate('DeckView', { title })}
+            style={{ height: 55, marginTop: 10 }}
+          >
+            Back to Deck
+          </Button>
         </ItemViewText>
       </ContainerView>
     )
@@ -98,6 +136,12 @@ const TextTitleDeck = styled.Text`
   font-size: 40px;
   text-align: center;
 `
+const Result = styled.Text`
+  color: ${black};
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+`
 const Btn = styled.TouchableOpacity`
   padding-top: 8px;
 `
@@ -109,9 +153,9 @@ const BtnText = styled.Text`
 `
 
 function mapStateToProps(state, { navigation }) {
-  const { key } = navigation.state.params
+  const { title } = navigation.state.params
   return {
-    deck: state[key]
+    deck: state[title]
   }
 }
 
