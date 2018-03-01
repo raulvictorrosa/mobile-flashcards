@@ -27,7 +27,7 @@ class DeckView extends Component {
 
   startQuiz = () => {
     const { navigate } = this.props
-    const { title } = this.props.deck
+    const { title, questions } = this.props.deck
     if (questions.length > 0) {
       navigate('QuizView', { title })
     } else {
