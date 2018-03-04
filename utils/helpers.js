@@ -10,15 +10,15 @@ export const getDailyReminderValue = () => ({
   today: "👋 Don't forget to complete your quiz today!"
 })
 
-export const clearLocalNotification = () => (
-  AsyncStorage.removeItem(NOTIFICATION_KEY)
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
-)
+}
 
 function createNotification() {
   return {
-    title: 'Log your stats!',
-    body: "👋 don't forget to log your stats for today!",
+    title: 'Studies for today!',
+    body: "👋 don't forget to study with your cards today!",
     ios: {
       sound: true,
     },
@@ -43,8 +43,8 @@ export function setLocalNotification() {
 
               let tomorrow = new Date()
               tomorrow.setDate(tomorrow.getDate() + 1)
-              tomorrow.setHours(17)
-              tomorrow.setMinutes(30)
+              tomorrow.setHours(15)
+              tomorrow.setMinutes(40)
 
               Notifications.scheduleLocalNotificationAsync(
                 createNotification(),
