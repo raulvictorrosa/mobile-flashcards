@@ -36,9 +36,6 @@ class NewDeck extends React.Component {
       navigate('DeckView', { title })
 
       Keyboard.dismiss()
-
-      //   clearLocalNotification()
-      //     .then(setLocalNotification)
     } else {
       Alert.alert(
         '', `The title of the deck can't be empty!`,
