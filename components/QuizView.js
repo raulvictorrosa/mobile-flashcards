@@ -40,8 +40,6 @@ class QuizView extends Component {
     const { showAnswer, currentQuestion, correctAnswers, incorrectAnswers } = this.state
     const { navigate } = this.props
     const { title, questions } = this.props.deck
-    // console.log(currentQuestion)
-    // console.log(questions.length)
 
     //It clears today notification and sets tomorrow notification
     if (currentQuestion >= questions.length) {
