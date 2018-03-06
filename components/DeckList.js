@@ -15,7 +15,7 @@ import { black, white } from '../utils/colors'
 class DecksList extends Component {
   componentDidMount() {
     const { dispatch } = this.props
-    Api.fetchDecks().then((decks) => dispatch(fetchDecks({ decks })))
+    Api.fetchDecks().then((decks) => dispatch(fetchDecks( decks )))
   }
 
   renderItem = (deck) => {
@@ -48,7 +48,7 @@ class DecksList extends Component {
     return (
       <ContainerView>
         <TouchableItemDeckView>
-          <TextTitleDeck>No deck registred.</TextTitleDeck>
+          <TextTitleDeck>No deck registered.</TextTitleDeck>
           <TextSubTitleCard></TextSubTitleCard>
         </TouchableItemDeckView>
       </ContainerView>
