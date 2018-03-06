@@ -33,7 +33,7 @@ class DeckView extends Component {
     } else {
       Alert.alert(
         '',
-        `This deck don't have cards registred!
+        `This deck don't have cards registered!
 
       Add some cards to this deck. 😊`,
         [ { text: 'Close' } ]
