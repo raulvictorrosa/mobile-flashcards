@@ -32,20 +32,25 @@ class DecksList extends Component {
 
   render() {
     const { decks } = this.props
-    const listOfDecks = Object.keys(decks).map(key => decks[key])
+    if (Object.keys(decks).length !== 0 && decks.constructor === Object) {
+      const listOfDecks = Object.keys(decks).map(key => decks[key])
+      return (
+        <ContainerView>
+          <FlatList
+            data={listOfDecks}
+            renderItem={({ item }) => this.renderItem(item)}
+            keyExtractor={(item, index) => index}
+          />
+        </ContainerView>
+      )
+    }
+
     return (
       <ContainerView>
-        {listOfDecks.length <= 0
-          ? <TouchableItemDeckView>
-              <TextTitleDeck>No deck registred.</TextTitleDeck>
-              <TextSubTitleCard></TextSubTitleCard>
-            </TouchableItemDeckView>
-          : <FlatList
-              data={listOfDecks}
-              renderItem={({ item }) => this.renderItem(item)}
-              keyExtractor={(item, index) => index}
-            />
-        }
+        <TouchableItemDeckView>
+          <TextTitleDeck>No deck registred.</TextTitleDeck>
+          <TextSubTitleCard></TextSubTitleCard>
+        </TouchableItemDeckView>
       </ContainerView>
     )
   }
