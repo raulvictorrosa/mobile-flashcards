@@ -21,7 +21,8 @@ class NewDeck extends React.Component {
   }
 
   handleSubmit = () => {
-    const { dispatch, navigate, goBack } = this.props
+    const { dispatch, navigation, goBack } = this.props
+    const { navigate } = navigation
     const { title } = this.state
     if (title !== '') {
       Api.addDeck(title)
@@ -64,12 +65,6 @@ class NewDeck extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch, { navigation }) {
-  return {
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params),
-  }
-}
-
 const ContainerKeyboardAvoidingView = styled.KeyboardAvoidingView`
   background-color: ${white};
   flex: 1;
@@ -93,6 +88,4 @@ const DeckTitleInput = styled.TextInput`
   padding-top: 2;
 `
 
-export default connect(
-  mapDispatchToProps
-)(NewDeck)
+export default connect()(NewDeck)
