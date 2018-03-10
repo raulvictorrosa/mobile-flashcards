@@ -38,7 +38,7 @@ class QuizView extends Component {
 
   render() {
     const { showAnswer, currentQuestion, correctAnswers, incorrectAnswers } = this.state
-    const { navigate } = this.props
+    const { navigate } = this.props.navigation
     const { title, questions } = this.props.deck
 
     //It clears today notification and sets tomorrow notification
@@ -157,13 +157,6 @@ function mapStateToProps(state, { navigation }) {
   }
 }
 
-function mapDispatchToProps(dispatch, { navigation }) {
-  return {
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(QuizView)

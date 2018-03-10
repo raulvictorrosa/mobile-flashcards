@@ -96,8 +96,7 @@ function mapStateToProps(state, { navigation }) {
 
 function mapDispatchToProps(dispatch, { navigation }) {
   return {
-    add: (key, card) => dispatch(addCard(key, card)),
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
+    add: (key, card) => dispatch(addCard(key, card))
   }
 }
 

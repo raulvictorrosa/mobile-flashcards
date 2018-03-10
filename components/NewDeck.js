@@ -21,8 +21,8 @@ class NewDeck extends React.Component {
   }
 
   handleSubmit = () => {
-    const { dispatch, navigation, goBack } = this.props
-    const { navigate } = navigation
+    const { dispatch } = this.props
+    const { navigate } = this.props.navigation
     const { title } = this.state
     if (title !== '') {
       Api.addDeck(title)
