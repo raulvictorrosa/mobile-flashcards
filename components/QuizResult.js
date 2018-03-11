@@ -20,13 +20,13 @@ class QuizView extends Component {
   }
 
   render() {
-    console.log(this.props)
     const {
       correctAnswers,
       incorrectAnswers,
+      goBack,
       restartQuiz,
-      navigate
     } = this.props
+    const { navigation } = this.props
     const { title, questions } = this.props
 
     return (
@@ -52,7 +52,7 @@ class QuizView extends Component {
             Restart Quiz
           </Button>
           <Button
-            onPress={() => navigate('DeckView', { title })}
+            onPress={() => navigation.goBack()}
             style={{ height: 55, marginTop: 10 }}
           >
             Back to Deck

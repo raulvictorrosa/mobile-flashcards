@@ -53,10 +53,10 @@ class QuizView extends Component {
       incorrectAnswers,
       showAnswer
     } = this.state
-    const { navigate } = this.props.navigation
+    const { navigation } = this.props
     const { title, questions } = this.props.deck
 
-    if (currentQuestion < questions.length) {navigate
+    if (currentQuestion < questions.length) {
       return (
         <ContainerView>
           <QtdQuestions>{currentQuestion + 1}/{questions.length}</QtdQuestions>
@@ -97,7 +97,7 @@ class QuizView extends Component {
         questions={questions}
         correctAnswers={correctAnswers}
         incorrectAnswers={incorrectAnswers}
-        navigate={navigate}
+        navigation={navigation}
         restartQuiz={this.restartQuiz}
       />
     )
@@ -131,7 +131,7 @@ const BtnText = styled.Text`
   text-align: center;
 `
 
-function mapStateToProps(state, { navigation }) {
+const mapStateToProps = (state, { navigation }) => {
   const { title } = navigation.state.params
   return {
     deck: state[title]
@@ -139,5 +139,5 @@ function mapStateToProps(state, { navigation }) {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
 )(QuizView)
