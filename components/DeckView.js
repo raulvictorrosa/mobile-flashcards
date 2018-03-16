@@ -20,13 +20,13 @@ class DeckView extends Component {
   }
 
   addCard = () => {
-    const { navigate } = this.props
+    const { navigate } = this.props.navigation
     const { title } = this.props.deck
     navigate('AddCard', { title })
   }
 
   startQuiz = () => {
-    const { navigate } = this.props
+    const { navigate } = this.props.navigation
     const { title, questions } = this.props.deck
     if (questions.length > 0) {
       navigate('QuizView', { title })
@@ -73,13 +73,6 @@ function mapStateToProps(state, { navigation }) {
   }
 }
 
-function mapDispatchToProps(dispatch, { navigation }) {
-  return {
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
-  }
-}
-
-
 const ContainerView = styled.View`
   background-color: ${white};
   flex: 1;
@@ -102,6 +95,5 @@ const TextSubTitleCard = styled.Text`
 `
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(DeckView)

@@ -5,12 +5,14 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
+import { fetchDeck } from '../actions';
+import { getDeck } from '../api'
 import styled from 'styled-components/native';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
-import { black, white } from '../utils/colors'
-import { Button } from './Button'
+import { black, red, white } from '../utils/colors'
+import { Button, ButtonOutline } from './Button'
 
-class QuizResult extends Component {
+class QuizView extends Component {
   componentDidMount() {
     //It clears today notification and sets tomorrow notification
     clearLocalNotification()
@@ -19,10 +21,13 @@ class QuizResult extends Component {
 
   render() {
     const {
-      incorrectAnswers,
       correctAnswers,
-      questionsLength
+      incorrectAnswers,
+      goBack,
+      restartQuiz,
     } = this.props
+    const { navigation } = this.props
+    const { title, questions } = this.props
 
     return (
       <ContainerView>
@@ -35,19 +40,19 @@ class QuizResult extends Component {
             </View>
           }
           {(incorrectAnswers == 0) &&
-            <Result>✅ You got all the {questionsLength} questions 👏</Result>
+            <Result>✅ You got all the {questions.length} questions 👏</Result>
           }
           {(incorrectAnswers > 0 && correctAnswers == 0) &&
-            <Result>❌ You'are wrong in all the {questionsLength} questions 😟</Result>
+            <Result>❌ You'are wrong in all the {questions.length} questions 😟</Result>
           }
           <Button
-            onPress={() => this.setState({ ...this.initialState })}
+            onPress={() => restartQuiz()}
             style={{ height: 55, marginTop: 50 }}
           >
             Restart Quiz
           </Button>
           <Button
-            onPress={() => navigate('DeckView', { title })}
+            onPress={() => navigation.goBack()}
             style={{ height: 55, marginTop: 10 }}
           >
             Back to Deck
@@ -79,20 +84,4 @@ const Result = styled.Text`
   margin-bottom: 10px;
 `
 
-function mapStateToProps(state, { navigation }) {
-  const { title } = navigation.state.params
-  return {
-    deck: state[title]
-  }
-}
-
-function mapDispatchToProps(dispatch, { navigation }) {
-  return {
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuizResult)
+export default connect()(QuizView)

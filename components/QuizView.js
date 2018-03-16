@@ -9,7 +9,8 @@ import { fetchDeck } from '../actions';
 import { getDeck } from '../api'
 import styled from 'styled-components/native';
 import { black, green, red, white } from '../utils/colors'
-import { Button } from './Button'
+import QuizResult from './QuizResult'
+import { Button, ButtonOutline } from './Button'
 
 class QuizView extends Component {
   initialState = {
@@ -25,25 +26,39 @@ class QuizView extends Component {
 
   nextQuestion = () => this.setState(() => ({ currentQuestion: ++this.state.currentQuestion }))
 
+  hideAnswer = () => {
+    if (this.state.showAnswer)
+      this.setState(() => ({ showAnswer: false }))
+  }
+
   correct = () => {
     this.setState(() => ({ correctAnswers: ++this.state.correctAnswers }))
+    this.hideAnswer()
     this.nextQuestion()
   }
 
   incorrect = () => {
     this.setState(() => ({ incorrectAnswers: ++this.state.incorrectAnswers }))
+    this.hideAnswer()
     this.nextQuestion()
   }
 
+  restartQuiz = () => this.setState({ ...this.initialState });
+
   render() {
-    const { showAnswer, currentQuestion, correctAnswers, incorrectAnswers } = this.state
-    const { navigate } = this.props
+    const {
+      correctAnswers,
+      currentQuestion,
+      incorrectAnswers,
+      showAnswer
+    } = this.state
+    const { navigation } = this.props
     const { title, questions } = this.props.deck
 
     if (currentQuestion < questions.length) {
       return (
         <ContainerView>
-          <QtdQuestions>{currentQuestion+1}/{questions.length}</QtdQuestions>
+          <QtdQuestions>{currentQuestion + 1}/{questions.length}</QtdQuestions>
           <ItemViewText>
             <TextTitleDeck>
               {showAnswer
@@ -76,7 +91,14 @@ class QuizView extends Component {
     }
 
     return (
-      <QuizResult />
+      <QuizResult
+        title={title}
+        questions={questions}
+        correctAnswers={correctAnswers}
+        incorrectAnswers={incorrectAnswers}
+        navigation={navigation}
+        restartQuiz={this.restartQuiz}
+      />
     )
   }
 }
@@ -91,7 +113,6 @@ const QtdQuestions = styled.Text`
   font-size: 20px;
 `
 const ItemViewText = styled.View`
-  height: 226px;
   padding-top: 132px;
 `
 const TextTitleDeck = styled.Text`
@@ -109,20 +130,13 @@ const BtnText = styled.Text`
   text-align: center;
 `
 
-function mapStateToProps(state, { navigation }) {
+const mapStateToProps = (state, { navigation }) => {
   const { title } = navigation.state.params
   return {
     deck: state[title]
   }
 }
 
-function mapDispatchToProps(dispatch, { navigation }) {
-  return {
-    navigate: (navigateTo, params) => navigation.navigate(navigateTo, params)
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(QuizView)
