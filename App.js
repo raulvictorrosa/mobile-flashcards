@@ -1,40 +1,36 @@
-import React from 'react';
-import {
-  Text,
-  View,
-  Platform,
-  StatusBar,
-  StyleSheet
-} from 'react-native';
-import styled from 'styled-components/native';
-import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
-import { createStore, applyMiddleware, compose } from 'redux'
+import React from 'react'
+import { Platform, StatusBar } from 'react-native'
+import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
-import Thunk from 'redux-thunk';
-import Reducers from './reducers'
-import NewDeck from './components/NewDeck'
+import { applyMiddleware, compose, createStore } from 'redux'
+import Thunk from 'redux-thunk'
+import styled from 'styled-components/native'
+import AddCard from './components/AddCard'
 import DeckList from './components/DeckList'
 import DeckView from './components/DeckView'
-import AddCard from './components/AddCard'
+import NewDeck from './components/NewDeck'
 import QuizView from './components/QuizView'
-import { black, yellow, white } from './utils/colors'
+import Reducers from './reducers'
+import { black, white, yellow } from './utils/colors'
 import { setLocalNotification } from './utils/helpers'
 
-const Tabs = TabNavigator({
-  DeckList: {
-    screen: DeckList,
-    navigationOptions: {
-      tabBarLabel: 'Decks',
+const Tabs = TabNavigator(
+  {
+    DeckList: {
+      screen: DeckList,
+      navigationOptions: {
+        tabBarLabel: 'Decks'
+      }
     },
+    NewDeck: {
+      screen: NewDeck,
+      navigationOptions: {
+        tabBarLabel: 'New Deck'
+      }
+    }
   },
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      tabBarLabel: 'New Deck',
-    },
-  },
-}, {
+  {
     navigationOptions: {
       header: null
     },
@@ -53,11 +49,12 @@ const Tabs = TabNavigator({
         shadowOpacity: 1
       }
     }
-  })
+  }
+)
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: Tabs,
+    screen: Tabs
   },
   DeckView: {
     screen: DeckView,
@@ -102,12 +99,7 @@ const StatusBarView = styled.View`
 `
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(
-  Reducers,
-  composeEnhancers(
-    applyMiddleware(Thunk)
-  )
-)
+const store = createStore(Reducers, composeEnhancers(applyMiddleware(Thunk)))
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -118,12 +110,16 @@ export default class App extends React.Component {
       <Provider store={store}>
         <ContainerView>
           <StatusBarView>
-            <StatusBar translucent backgroundColor={black} barStyle="light-content" />
+            <StatusBar
+              translucent
+              backgroundColor={black}
+              barStyle="light-content"
+            />
           </StatusBarView>
 
           <MainNavigator />
         </ContainerView>
       </Provider>
-    );
+    )
   }
 }

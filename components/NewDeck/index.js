@@ -1,23 +1,16 @@
 import React from 'react'
-import {
-  Alert,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  Keyboard,
-} from 'react-native'
-import styled from 'styled-components/native';
-import * as Api from '../api'
+import { Alert, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
+import styled from 'styled-components/native'
 import { addDeck } from '../actions'
-import { black, purple, white } from '../utils/colors'
-import { NavigationActions } from 'react-navigation'
+import * as Api from '../api'
+import { black, white } from '../utils/colors'
 import { Button } from './Button'
 
 class NewDeck extends React.Component {
   state = {
     title: '',
-    error: false,
+    error: false
   }
 
   handleSubmit = () => {
@@ -26,40 +19,37 @@ class NewDeck extends React.Component {
     const { title } = this.state
     if (title !== '') {
       Api.addDeck(title)
-      dispatch(addDeck({
-        [title]: {
-          title,
-          questions: []
-        }
-      }))
+      dispatch(
+        addDeck({
+          [title]: {
+            title,
+            questions: []
+          }
+        })
+      )
 
       this.setState(() => ({ title: '' }))
       navigate('DeckView', { title })
 
       Keyboard.dismiss()
     } else {
-      Alert.alert(
-        '', `The title of the deck can't be empty!`,
-        [{ text: 'Close' }]
-      )
+      Alert.alert('', `The title of the deck can't be empty!`, [
+        { text: 'Close' }
+      ])
     }
   }
 
   render() {
     const { title } = this.state
     return (
-      <ContainerKeyboardAvoidingView behavior='padding'>
-        <TitleText>
-          What is the title of your new deck?
-        </TitleText>
+      <ContainerKeyboardAvoidingView behavior="padding">
+        <TitleText>What is the title of your new deck?</TitleText>
         <DeckTitleInput
           placeholder="Deck Title"
           onChangeText={(title) => this.setState({ title })}
           value={title}
         />
-        <Button onPress={this.handleSubmit}>
-          Submit
-        </Button>
+        <Button onPress={this.handleSubmit}>Submit</Button>
       </ContainerKeyboardAvoidingView>
     )
   }

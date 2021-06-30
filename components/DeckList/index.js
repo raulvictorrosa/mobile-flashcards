@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  Platform,
-  TouchableOpacity,
-  FlatList
-} from 'react-native'
+import { FlatList, Platform } from 'react-native'
 import { connect } from 'react-redux'
+import styled from 'styled-components/native'
 import { fetchDecks } from '../actions'
 import * as Api from '../api'
-import styled from 'styled-components/native';
 import { black, white } from '../utils/colors'
 
 class DecksList extends Component {
   componentDidMount() {
     const { dispatch } = this.props
-    Api.fetchDecks().then((decks) => dispatch(fetchDecks( decks )))
+    Api.fetchDecks().then((decks) => dispatch(fetchDecks(decks)))
   }
 
   renderItem = (deck) => {
@@ -33,7 +27,7 @@ class DecksList extends Component {
   render() {
     const { decks } = this.props
     if (Object.keys(decks).length !== 0 && decks.constructor === Object) {
-      const listOfDecks = Object.keys(decks).map(key => decks[key])
+      const listOfDecks = Object.keys(decks).map((key) => decks[key])
       return (
         <ContainerView>
           <FlatList
@@ -88,6 +82,4 @@ const TextSubTitleCard = styled.Text`
 
 const mapStateToProps = (decks) => ({ decks })
 
-export default connect(
-  mapStateToProps
-)(DecksList)
+export default connect(mapStateToProps)(DecksList)

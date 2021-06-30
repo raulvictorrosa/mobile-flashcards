@@ -1,16 +1,9 @@
 import React, { Component } from 'react'
-import {
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native'
 import { connect } from 'react-redux'
-import { fetchDeck } from '../actions';
-import { getDeck } from '../api'
-import styled from 'styled-components/native';
+import styled from 'styled-components/native'
 import { black, green, red, white } from '../utils/colors'
+import { Button } from './Button'
 import QuizResult from './QuizResult'
-import { Button, ButtonOutline } from './Button'
 
 class QuizView extends Component {
   initialState = {
@@ -24,11 +17,11 @@ class QuizView extends Component {
     ...this.initialState
   }
 
-  nextQuestion = () => this.setState(() => ({ currentQuestion: ++this.state.currentQuestion }))
+  nextQuestion = () =>
+    this.setState(() => ({ currentQuestion: ++this.state.currentQuestion }))
 
   hideAnswer = () => {
-    if (this.state.showAnswer)
-      this.setState(() => ({ showAnswer: false }))
+    if (this.state.showAnswer) this.setState(() => ({ showAnswer: false }))
   }
 
   correct = () => {
@@ -43,34 +36,36 @@ class QuizView extends Component {
     this.nextQuestion()
   }
 
-  restartQuiz = () => this.setState({ ...this.initialState });
+  restartQuiz = () => this.setState({ ...this.initialState })
 
   render() {
-    const {
-      correctAnswers,
-      currentQuestion,
-      incorrectAnswers,
-      showAnswer
-    } = this.state
+    const { correctAnswers, currentQuestion, incorrectAnswers, showAnswer } =
+      this.state
     const { navigation } = this.props
     const { title, questions } = this.props.deck
 
     if (currentQuestion < questions.length) {
       return (
         <ContainerView>
-          <QtdQuestions>{currentQuestion + 1}/{questions.length}</QtdQuestions>
+          <QtdQuestions>
+            {currentQuestion + 1}/{questions.length}
+          </QtdQuestions>
           <ItemViewText>
             <TextTitleDeck>
               {showAnswer
                 ? questions[currentQuestion].answer
-                : questions[currentQuestion].question
-              }
+                : questions[currentQuestion].question}
             </TextTitleDeck>
-            <Btn onPress={() => this.setState(() => ({ showAnswer: !this.state.showAnswer }))} >
-              {showAnswer == true
-                ? <BtnText>Question</BtnText>
-                : <BtnText>Answer</BtnText>
+            <Btn
+              onPress={() =>
+                this.setState(() => ({ showAnswer: !this.state.showAnswer }))
               }
+            >
+              {showAnswer == true ? (
+                <BtnText>Question</BtnText>
+              ) : (
+                <BtnText>Answer</BtnText>
+              )}
             </Btn>
           </ItemViewText>
 
@@ -137,6 +132,4 @@ const mapStateToProps = (state, { navigation }) => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-)(QuizView)
+export default connect(mapStateToProps)(QuizView)

@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import {
-  Alert,
-  Platform,
-  Text,
-  View,
-} from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
-import { fetchDeck } from '../actions';
-import { getDeck } from '../api'
-import styled from 'styled-components/native';
-import { black, dark, white } from '../utils/colors'
+import styled from 'styled-components/native'
+import { black, white } from '../utils/colors'
 import { Button, ButtonOutline } from './Button'
 
 class DeckView extends Component {
@@ -36,7 +29,7 @@ class DeckView extends Component {
         `This deck don't have cards registered!
 
       Add some cards to this deck. 😊`,
-        [ { text: 'Close' } ]
+        [{ text: 'Close' }]
       )
     }
   }
@@ -51,14 +44,11 @@ class DeckView extends Component {
         </ItemViewText>
         <ButtonOutline
           onPress={this.addCard}
-          style={{ height: 55, marginTop: 10, }}
+          style={{ height: 55, marginTop: 10 }}
         >
           Add Card
         </ButtonOutline>
-        <Button
-          onPress={this.startQuiz}
-          style={{ height: 55, marginTop: 10, }}
-        >
+        <Button onPress={this.startQuiz} style={{ height: 55, marginTop: 10 }}>
           Start Quiz
         </Button>
       </ContainerView>
@@ -94,6 +84,4 @@ const TextSubTitleCard = styled.Text`
   text-align: center;
 `
 
-export default connect(
-  mapStateToProps
-)(DeckView)
+export default connect(mapStateToProps)(DeckView)

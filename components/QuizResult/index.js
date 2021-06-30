@@ -1,31 +1,19 @@
 import React, { Component } from 'react'
-import {
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native'
+import { View } from 'react-native'
 import { connect } from 'react-redux'
-import { fetchDeck } from '../actions';
-import { getDeck } from '../api'
-import styled from 'styled-components/native';
+import styled from 'styled-components/native'
+import { black, white } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
-import { black, red, white } from '../utils/colors'
-import { Button, ButtonOutline } from './Button'
+import { Button } from './Button'
 
 class QuizView extends Component {
   componentDidMount() {
     //It clears today notification and sets tomorrow notification
-    clearLocalNotification()
-      .then(setLocalNotification)
+    clearLocalNotification().then(setLocalNotification)
   }
 
   render() {
-    const {
-      correctAnswers,
-      incorrectAnswers,
-      goBack,
-      restartQuiz,
-    } = this.props
+    const { correctAnswers, incorrectAnswers, goBack, restartQuiz } = this.props
     const { navigation } = this.props
     const { title, questions } = this.props
 
@@ -33,18 +21,20 @@ class QuizView extends Component {
       <ContainerView>
         <ItemViewText>
           <TextTitleDeck style={{ marginBottom: 20 }}>Finished!</TextTitleDeck>
-          {(incorrectAnswers > 0 && correctAnswers > 0) &&
+          {incorrectAnswers > 0 && correctAnswers > 0 && (
             <View>
               <Result>✅ You're right in {correctAnswers} questions</Result>
               <Result>❌ And wrong in {incorrectAnswers} questions</Result>
             </View>
-          }
-          {(incorrectAnswers == 0) &&
+          )}
+          {incorrectAnswers == 0 && (
             <Result>✅ You got all the {questions.length} questions 👏</Result>
-          }
-          {(incorrectAnswers > 0 && correctAnswers == 0) &&
-            <Result>❌ You'are wrong in all the {questions.length} questions 😟</Result>
-          }
+          )}
+          {incorrectAnswers > 0 && correctAnswers == 0 && (
+            <Result>
+              ❌ You'are wrong in all the {questions.length} questions 😟
+            </Result>
+          )}
           <Button
             onPress={() => restartQuiz()}
             style={{ height: 55, marginTop: 50 }}

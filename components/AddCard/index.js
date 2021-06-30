@@ -1,21 +1,16 @@
 import React, { Component } from 'react'
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Keyboard,
-  TextInput,
-} from 'react-native'
+import { Alert, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
-import { addCard } from '../actions';
+import styled from 'styled-components/native'
+import { addCard } from '../actions'
 import { addCardToDeck } from '../api'
-import styled from 'styled-components/native';
-import { black, dark, white } from '../utils/colors'
-import { Button, ButtonOutline } from './Button'
+import { black, white } from '../utils/colors'
+import { Button } from './Button'
 
 class AddCard extends Component {
   state = {
     question: '',
-    answer: '',
+    answer: ''
   }
 
   handleSubmit = () => {
@@ -23,15 +18,11 @@ class AddCard extends Component {
     const card = this.state
 
     if (card.question == '') {
-      Alert.alert(
-        '', `The question field can't be empty 😊`,
-        [{ text: 'Close' }]
-      )
+      Alert.alert('', `The question field can't be empty 😊`, [
+        { text: 'Close' }
+      ])
     } else if (card.answer == '') {
-      Alert.alert(
-        '', `The answer field can't be empty 😊`,
-        [{ text: 'Close' }]
-      )
+      Alert.alert('', `The answer field can't be empty 😊`, [{ text: 'Close' }])
     } else {
       const { title } = this.props
       addCardToDeck(title, card)
@@ -43,17 +34,14 @@ class AddCard extends Component {
       }))
 
       Keyboard.dismiss()
-      Alert.alert(
-        '', `Question added with success! 👍`,
-        [{ text: 'Close' }]
-      )
+      Alert.alert('', `Question added with success! 👍`, [{ text: 'Close' }])
     }
   }
 
-  render () {
+  render() {
     const { question, answer } = this.state
     return (
-      <ContainerKeyboardAvoidingView behavior='padding'>
+      <ContainerKeyboardAvoidingView behavior="padding">
         <DeckInput
           placeholder="Your question"
           onChangeText={(question) => this.setState({ question })}
@@ -100,7 +88,4 @@ function mapDispatchToProps(dispatch, { navigation }) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddCard)
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard)

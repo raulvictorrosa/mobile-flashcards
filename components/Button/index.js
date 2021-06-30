@@ -1,24 +1,20 @@
-import React, { Component } from 'react'
-import {
-  Text,
-  View,
-  Platform,
-  TouchableOpacity,
-} from 'react-native'
-import styled from 'styled-components/native';
+import React from 'react'
+import { Platform, View } from 'react-native'
+import styled from 'styled-components/native'
 import { black, white } from '../utils/colors'
 
 export const Button = ({ children, onPress, style = {} }) => {
   return (
     <View>
-      {Platform.OS === 'ios'
-        ? <IosBtn onPress={onPress} style={style}>
-            <BtnText>{children}</BtnText>
-          </IosBtn>
-        : <AndroidBtn onPress={onPress} style={style}>
-            <BtnText>{children}</BtnText>
-          </AndroidBtn>
-      }
+      {Platform.OS === 'ios' ? (
+        <IosBtn onPress={onPress} style={style}>
+          <BtnText>{children}</BtnText>
+        </IosBtn>
+      ) : (
+        <AndroidBtn onPress={onPress} style={style}>
+          <BtnText>{children}</BtnText>
+        </AndroidBtn>
+      )}
     </View>
   )
 }
@@ -26,14 +22,15 @@ export const Button = ({ children, onPress, style = {} }) => {
 export const ButtonOutline = ({ children, onPress, style = {} }) => {
   return (
     <View>
-      {Platform.OS === 'ios'
-        ? <IosBtnOutline onPress={onPress} style={style}>
-            <BtnOutlineText>{children}</BtnOutlineText>
-          </IosBtnOutline>
-        : <AndroidBtnOutline onPress={onPress} style={style}>
-            <BtnOutlineText>{children}</BtnOutlineText>
-          </AndroidBtnOutline>
-      }
+      {Platform.OS === 'ios' ? (
+        <IosBtnOutline onPress={onPress} style={style}>
+          <BtnOutlineText>{children}</BtnOutlineText>
+        </IosBtnOutline>
+      ) : (
+        <AndroidBtnOutline onPress={onPress} style={style}>
+          <BtnOutlineText>{children}</BtnOutlineText>
+        </AndroidBtnOutline>
+      )}
     </View>
   )
 }
@@ -49,7 +46,7 @@ const BtnTextDefault = styled.Text`
 `
 
 const Btn = BtnDefault.extend`
-  backgroundColor: ${black};
+  backgroundcolor: ${black};
 `
 const IosBtn = Btn.extend`
   border-radius: 7;
@@ -69,7 +66,7 @@ const BtnText = BtnTextDefault.extend`
 `
 
 const BtnOutline = BtnDefault.extend`
-  backgroundColor: ${white};
+  backgroundcolor: ${white};
   border: 2px solid ${black};
 `
 const IosBtnOutline = BtnOutline.extend`

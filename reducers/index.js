@@ -1,4 +1,4 @@
-import { FETCH_DECKS, FETCH_DECK, ADD_DECK, ADD_CARD } from '../actions'
+import { ADD_CARD, ADD_DECK, FETCH_DECK, FETCH_DECKS } from '../actions'
 
 const decks = (state = {}, action) => {
   switch (action.type) {
@@ -25,10 +25,7 @@ const decks = (state = {}, action) => {
         ...state,
         [action.key]: {
           ...state[action.key],
-          questions: [
-            ...state[action.key].questions,
-            action.card
-          ]
+          questions: [...state[action.key].questions, action.card]
         }
       }
 

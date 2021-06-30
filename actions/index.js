@@ -3,17 +3,17 @@ export const FETCH_DECK = 'FETCH_DECK'
 export const ADD_DECK = 'ADD_DECK'
 export const ADD_CARD = 'ADD_CARD'
 
-export const fetchDecks = decks => ({
+export const fetchDecks = (decks) => ({
   type: FETCH_DECKS,
   decks
 })
 
-export const fetchDeck = deck => ({
+export const fetchDeck = (deck) => ({
   type: FETCH_DECK,
   deck
 })
 
-export const addDeck = deck => ({
+export const addDeck = (deck) => ({
   type: ADD_DECK,
   deck
 })
